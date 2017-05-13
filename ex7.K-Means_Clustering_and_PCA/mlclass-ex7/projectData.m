@@ -18,9 +18,10 @@ Z = zeros(size(X, 1), K);
 %                    projection_k = x' * U(:, k);
 %
 
-U_reduce = U(:, 1:K);
-for i = 1: size(X, 1)
-  Z(i, :) = (U_reduce'*X(i, :)')';
+U_reduce = U(:, 1:K); % n x k
+for i = 1: size(X, 1) % m
+  %Z(i, :) = (U_reduce'*X(i, :)')'; % (k x n * (1 x n)')' -> (k x n * n x 1)' -> (k x 1)' -> 1 x k
+  Z(i, :) = X(i, :) * U_reduce; % simplification of :  Z(i, :) = (U_reduce'*X(i, :)')'; 1 x n * n x k = 1 x k
 end
 
 % =============================================================
